@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "node": "NODE_PATH=./src/ node -r ts-node/register src/index.ts",
+    "compile": "./scripts/cleaner && tsc",
     "start": "nodemon"
   },
   "author": "rhezaas",

@@ -1,0 +1,12 @@
+#!/bin/bash
+
+rm -rf abstract
+rm -rf controllers
+rm -rf models
+rm -rf queries
+rm -rf error.js
+rm -rf error.d.ts 
+rm -rf middleware.js
+rm -rf middleware.d.ts
+rm -rf server.js
+rm -rf server.d.ts
