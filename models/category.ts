@@ -1,5 +1,5 @@
 import { EntityManager } from 'typeorm'
-import { CategoryQuery } from 'queries'
+import { CategoryQuery } from '../queries'
 
 export class CategoryModel {
     public async tester(transaction: EntityManager) {

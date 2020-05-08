@@ -1,6 +1,6 @@
 {
   "name": "ito",
-  "version": "1.2",
+  "version": "1.2.0",
   "description": "API - Typescript, Express, TypeORM",
   "main": "index.js",
   "files": [
@@ -16,7 +16,7 @@
     "package.json"
   ],
   "scripts": {
-    "start": "NODE_PATH=./src/ node -r ts-node/register src/index.ts",
+    "start": "NODE_PATH=./src/ node -r ts-node/register index.ts",
     "dev": "nodemon",
     "deploy": "nodeshift"
   },
