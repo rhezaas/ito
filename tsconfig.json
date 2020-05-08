@@ -1,6 +1,13 @@
 {
 	"include": [
-		"./src/**/*.ts"
+		"./abstracts/**/*.ts",
+		"./controllers/**/*.ts",
+		"./models/**/*.ts",
+		"./queries/**/*.ts", 
+		"index.ts",
+		"error.ts",
+		"middleware.ts",
+		"server.ts"
 	],
 	"exclude": [
 		"node_modules/*"

@@ -1,7 +1,7 @@
 import { Express, Request, Response, NextFunction } from 'express'
 import { EntityManager } from 'typeorm'
 import { AccountModel } from './models'
-import { ErrorModel, CODES } from 'error'
+import { ErrorModel, CODES } from './error'
 // import { System } from 'kioku/tools'
 
 export class Middleware {

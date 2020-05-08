@@ -1,7 +1,7 @@
 import { ControllerModel } from '../abstracts'
 import { Request, Response } from 'express'
 import { EntityManager } from 'typeorm'
-import { CategoryModel } from 'models'
+import { CategoryModel } from '../models'
 export class AdminController extends ControllerModel {
     public routes() {
         return {
