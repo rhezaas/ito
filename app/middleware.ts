@@ -13,18 +13,22 @@ export class Middleware {
         return async (req: Request, res: Response, next: NextFunction) => {
             const account = new AccountModel()
             const token = req.headers.authorization.split(' ')[1]
-            const is_authorize = await account.authentication(token, transaction)
-
+            
             try {
-                if(is_authorize) {
-                    next()
+                if(token) {
+                    const is_authorize = await account.authentication(token, transaction)
+
+                    if(is_authorize) {
+                        next()
+                    } else {
+                        throw ErrorModel.new(CODES.CODE_401, `You're not authorized`)
+                    }
                 } else {
                     throw ErrorModel.new(CODES.CODE_401, `You're not authorized`)
                 }
             } catch (err) {
                 res.status(err.code).send(err)
-            }
-            
+            } 
         }
     }
 }

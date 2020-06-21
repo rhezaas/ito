@@ -1,25 +1,25 @@
 {
 	"include": [
-		"./abstracts/**/*.ts",
-		"./controllers/**/*.ts",
-		"./models/**/*.ts",
-		"./queries/**/*.ts", 
-		"index.ts",
-		"error.ts",
-		"middleware.ts",
-		"server.ts"
+		"app/abstracts/**/*.ts",
+		"app/routes/**/*.ts",
+		"app/models/**/*.ts",
+		"app/queries/**/*.ts", 
+		"app/index.ts",
+		"app/error.ts",
+		"app/middleware.ts",
+		"app/server.ts"
 	],
 	"exclude": [
 		"node_modules/*"
 	],
 	"compilerOptions": {
-		"baseUrl": "./src",
+		"baseUrl": "./app",
 		"lib": [
 			"es5",
 			"es6",
 			"es2017.object"
 		],
-		"target": "es5",
+		"target": "es6",
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"outDir": "./",

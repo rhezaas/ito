@@ -1,7 +1,8 @@
 import { Express, Request, Response } from 'express'
 import { Connection } from 'typeorm'
+import { System } from 'kioku/tools'
 
-export abstract class ControllerModel {
+export abstract class AbstractController {
     private server: Express
     private connection: Connection
     
@@ -27,7 +28,7 @@ export abstract class ControllerModel {
                     } catch(error) {
                         await queryRunner.rollbackTransaction()
                         res.status(500).json({message: error})
-                        console.error(error)
+                        System.error(500, error)
                     } finally {
                         await queryRunner.release()
                     }

@@ -1,9 +1,9 @@
-import { ControllerModel } from '../abstracts'
+import { AbstractController } from '../abstracts'
 import { Request, Response } from 'express'
 import { EntityManager } from 'typeorm'
 import { CategoryModel } from '../models'
 
-export class CategoryController extends ControllerModel {
+export class CategoryController extends AbstractController {
     public routes() {
         return {
             '/category': {

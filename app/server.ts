@@ -10,7 +10,7 @@ export class Server {
     private server = express()
     private database = new Database()
 
-    public async initialize() {
+    constructor() {
         this.database.synchronize()
         .then(connection => {
             this.server.use(bodyParser.json())
@@ -18,7 +18,7 @@ export class Server {
             new Middleware(this.server, connection.manager)
 
             Object.values(Controllers).map(controller => {
-                controller.prototype.constructor(this.server, connection)
+                new controller(this.server, connection)
             })
 
             this.server.use('/', (req, res) => {
@@ -43,10 +43,8 @@ export class Server {
             return connection
 
         }).then(connection => {
-            if(process.env.LOG_MANAGER) {
-                Object.values(Models).map(model => {
-                    model.prototype.tester(connection.manager)
-                })
+            if(process.env.INITIALIZE) {
+                new Models.AccountModel().initialize(connection.manager)
             }
         })
         .catch(err => {

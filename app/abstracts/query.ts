@@ -5,18 +5,18 @@ import {
     EntityManager,
     InsertQueryBuilder,
     UpdateQueryBuilder,
-    DeleteQueryBuilder
+    DeleteQueryBuilder,
 } from 'typeorm'
 
-export abstract class QueryModel {
+export abstract class AbstractQuery {
     private transaction: EntityManager = null
 
     constructor(__transaction: EntityManager) {
         this.transaction = __transaction
     }
 
-    protected select<T>(table: string | ObjectType<T>, alias: string) {
-        return this.transaction.createQueryBuilder(table as any, alias)
+    protected query<T>(table: ObjectType<T>, alias: string) {
+        return this.transaction.createQueryBuilder(table, alias)
     }
 
     protected insert<T>(table: string | ObjectType<T>, fn: (query: InsertQueryBuilder<T>) => InsertQueryBuilder<T>, columns?: string[]) {
