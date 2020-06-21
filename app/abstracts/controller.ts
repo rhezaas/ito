@@ -27,8 +27,14 @@ export abstract class AbstractController {
                         await queryRunner.commitTransaction()
                     } catch(error) {
                         await queryRunner.rollbackTransaction()
-                        res.status(500).json({message: error})
-                        System.error(500, error)
+
+                        if(error?.code){
+                            res.status(error.code).json({error})
+                            System.error(error.code, error)
+                        } else {
+                            res.status(500).json({error})
+                            System.error(500, error)
+                        }
                     } finally {
                         await queryRunner.release()
                     }

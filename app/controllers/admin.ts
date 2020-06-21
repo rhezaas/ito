@@ -8,13 +8,16 @@ export class AdminController extends AbstractController {
             '/admin/account': {
                 post: this.createUser
             },
-            '/admin/category': {
+            '/admin/category/': {
                 post: this.createCategory
             },
+            '/admin/category/id': {
+                post: this.createSubCategory
+            }
         }
     }
 
-    public async createUser(req: Request, res: Response, transaction: EntityManager) {
+    private async createUser(req: Request, res: Response, transaction: EntityManager) {
         const account = new AccountModel()
 
         const {
@@ -32,7 +35,19 @@ export class AdminController extends AbstractController {
             })
     }
 
-    public async createCategory(req: Request, res: Response, transaction: EntityManager) {
+    private async createCategory(req: Request, res: Response, transaction: EntityManager) {
+        const category = new CategoryModel()
+
+        await category.createCategory(req.body.name, transaction)
+            .then(r => {
+                res.status(200).json(r)
+            })
+            .catch(err => {
+                throw err
+            })
+    }
+
+    private async createSubCategory(req: Request, res: Response, transaction: EntityManager) {
         const category = new CategoryModel()
 
         await category.createCategory(req.body.name, transaction)

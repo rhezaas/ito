@@ -37,13 +37,10 @@ export class AccountQuery extends AbstractQuery {
             .getOne()
     }
 
-    public async getCred(token: string): Promise<string> {
+    public async getCred(token: string): Promise<UserInterface> {
         return this.query(UserEntity, 'user')
             .where('user.token = :token', {token})
             .getOne()
-            .then((res: UserInterface) => {
-                return res?.token
-            })
     }
 
     // Update

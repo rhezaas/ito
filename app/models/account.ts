@@ -44,21 +44,28 @@ export class AccountModel {
         const user = new AccountQuery(transaction)
         const account = await user.getCred(token)
 
-        return account ? true : false
+        if(account) {
+            return {
+                id: account.id,
+                name: account.name,
+                role: account.role,
+                token: account.token
+            }
+        } else {
+            return false
+        }
     }
 
     // Update
     private async superAccountSetup(transaction: EntityManager) {
         const account = new AccountQuery(transaction)
-        
-        await account.getSuperAdmin()
-        .catch(async err => {
-            if(err.code === 500) {
-                const encryptedPassword = await bcrypt.hash(process.env.SUPERADMIN_KEY, 10)
-                const token = await bcrypt.hash(encryptedPassword, 10)
+        const superadmin = await account.getSuperAdmin()
 
-                await account.createAccount('dev', ROLES.SUPERADMIN, encryptedPassword, token)
-            }
-        })
+        if(superadmin) {
+            const encryptedPassword = await bcrypt.hash(process.env.SUPERADMIN_KEY, 10)
+            const token = await bcrypt.hash(encryptedPassword, 10)
+
+            await account.createAccount('dev', ROLES.SUPERADMIN, encryptedPassword, token)
+        }
     }
 }

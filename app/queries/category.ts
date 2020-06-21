@@ -5,8 +5,25 @@ import { CategoryInterface, ItemInterface } from 'kioku/interfaces'
 export class CategoryQuery extends AbstractQuery {
     // Create
     async createCategory(name: string) {
-        return this.insert(CategoryEntity, q => {
-            return q.values({name})
+        return this.insert(CategoryEntity, insert => {
+            return insert.values({name})
+        })
+    }
+
+    async createSubCategory(category_id: number, name: string) {
+        return this.insert(CategoryEntity, insert => {
+            return insert.values({category_id, name})
+        })
+    }
+
+    async addItems(datas: [{
+        category_id: number,
+        name: string,
+        price: number,
+        description: string
+    }]) {
+        return this.insert(ItemEntity, insert => {
+            return insert.values(datas)
         })
     }
 
@@ -16,6 +33,12 @@ export class CategoryQuery extends AbstractQuery {
             .leftJoinAndMapMany('category.items', ItemEntity, 'item', 'item.category_id = category.id')
             .getMany()
         
+    }
+
+    async getSubCategories(): Promise<CategoryInterface[]> {
+        return this.query(CategoryEntity, 'category')
+            .where('category.category_id IS NOT NULL')
+            .getMany()
     }
 
     async getItems(category_id: number): Promise<CategoryInterface & {items: ItemInterface[]}> {

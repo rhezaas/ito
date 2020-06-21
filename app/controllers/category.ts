@@ -12,7 +12,7 @@ export class CategoryController extends AbstractController {
         }
     }
 
-    public async get(req: Request, res: Response, transaction: EntityManager) {
+    private async get(req: Request, res: Response, transaction: EntityManager) {
         const category = new CategoryModel()
 
         await category.get(transaction)

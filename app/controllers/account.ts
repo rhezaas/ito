@@ -12,7 +12,7 @@ export class AccountController extends AbstractController {
         }
     }
 
-    public async login(req: Request, res: Response, transaction: EntityManager) {
+    private async login(req: Request, res: Response, transaction: EntityManager) {
         const user = new AccountModel()
         
         const {

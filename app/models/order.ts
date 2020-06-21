@@ -1,44 +1,42 @@
 import { EntityManager } from 'typeorm'
-// import { AccountQuery } from '../queries'
-// import * as bcrypt from 'bcrypt'
+import { OrderQuery } from '../queries'
+import { ORDER_STATUS } from 'kioku/enum'
 
 export class OrderModel {
+
     // Insert
-    public async accountSetup(name: string, password: string, transaction: EntityManager) {
-        // const user = new AccountQuery(transaction)
-        // const encryptedPassword = await bcrypt.hash(password, 10)
-        // const token = await bcrypt.hash(encryptedPassword, 10)
-        // const account = await user.getAccount(name)
-        
-        // return await user.createAccount(account.id, encryptedPassword, token)   
+    public async create(user_id: number, transaction: EntityManager) {
+        const order = new OrderQuery(transaction)
+
+        return await order.create(user_id)
+    }
+    
+    public async addItems(order_id: number, item_ids: number[], transaction: EntityManager) {
+        const order = new OrderQuery(transaction)
+
+        return await order.addItems(order_id, item_ids)
+            .then(async () => {
+                const detail = await order.getDetail(order_id)
+                const total= detail.items.reduce((init, item) => init + item.price, 0)
+
+                await order.updatePrice(order_id, total)
+
+                return detail
+            })
     }
 
     // Read
-    public async login(name: string, password: string, transaction: EntityManager) {
-        // const user = new AccountQuery(transaction)
-        // const account = await user.getAccount(name)
-        // const is_match = await bcrypt.compare(password, account.account.password)
+    public async get(user_id: number, status: ORDER_STATUS, transaction: EntityManager) {
+        const order = new OrderQuery(transaction)
 
-        // if(is_match) {
-        //     await user.updateCred(account.id, await bcrypt.hash(account.account.password, 10))
-
-        //     return {
-        //         id: account.id,
-        //         name: account.name,
-        //         role: account.role,
-        //         token: await user.getAccount(name).then(acc => acc.account.token)
-        //     }
-        // }
+        return await order.get(user_id, status)
     }
 
-    public async authentication(token: string, transaction: EntityManager) {
-        // const user = new AccountQuery(transaction)
-        // const account = await user.getCred(token)
+    public async getDetail(order_id: number, transaction) {
+        const order = new OrderQuery(transaction)
 
-        // return account ? true : false
+        return await order.getDetail(order_id)
     }
-
     // Update
-
 
 }
