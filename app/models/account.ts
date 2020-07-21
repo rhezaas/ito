@@ -61,7 +61,7 @@ export class AccountModel {
         const account = new AccountQuery(transaction)
         const superadmin = await account.getSuperAdmin()
 
-        if(superadmin) {
+        if(!superadmin) {
             const encryptedPassword = await bcrypt.hash(process.env.SUPERADMIN_KEY, 10)
             const token = await bcrypt.hash(encryptedPassword, 10)
 
